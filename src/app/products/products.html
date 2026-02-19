@@ -1,0 +1,36 @@
+<h2>🛒 Cart Items: {{ cartCount }}</h2>
+<h3>Total: ₱{{ totalPrice }}</h3>
+<hr>
+
+<label>Filter Category: </label>
+<select [(ngModel)]="selectedCategory">
+  <option value="All">All</option>
+  <option value="Clothes">Hoodies</option>
+</select>
+
+<br><br>
+
+
+<div class="products">
+
+  <div class="product-card"
+     *ngFor="let item of products"
+     [hidden]="selectedCategory !== 'All' && item.category !== selectedCategory">
+
+    <img [src]="item.image" width="150" height="150">
+
+    <h3>{{ item.name }}</h3>
+
+    <p>Price: ₱{{ item.price }}</p>
+
+    <p *ngIf="item.available; else outStock">Available</p>
+
+    <ng-template #outStock>
+      <p style="color:red;">Out of Stock</p>
+    </ng-template>
+
+    <button (click)="addToCart(item)" [disabled]="!item.available">Add to Cart</button>
+
+  </div>
+
+</div>
